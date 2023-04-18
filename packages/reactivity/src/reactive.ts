@@ -1,4 +1,5 @@
 import { isObject } from '@vue/shared'
+import { track } from './effect'
 
 const enum ReactiveFlags {
   IS_REACTIVE = '__v_isReactive'
@@ -10,6 +11,8 @@ const mutableHandlers = {
     if (key === ReactiveFlags.IS_REACTIVE) {
       return true
     }
+    // 依赖收集
+    track(target, key)
     // 相当于 target[key]
     const res = Reflect.get(target, key, receiver)
     return res

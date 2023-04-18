@@ -8,7 +8,7 @@
 <div id="app"></div>
 <script src="../dist/reactivity.global.js"></script>
 <script>
-    const { reactive } = VueReactivity
+    const { reactive, effect } = VueReactivity
 
     const obj = {
       name: 'xiaoming',
@@ -23,6 +23,15 @@
 
     // 缓存对象再被缓存结果仍然不变，仍然是同一个
     console.log(reactive(state1) === state1)
+
+    // 会默认执行一次
+    effect(() => {
+      app.innerHTML = state1.name + state1.age
+    })
+
+    setTimeout(() => {
+      state1.age = 20
+    }, 2000)
 </script>
 </body>
 </html>
